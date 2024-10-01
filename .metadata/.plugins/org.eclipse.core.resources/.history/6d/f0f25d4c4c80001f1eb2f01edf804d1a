@@ -7,7 +7,7 @@ public class exercicio5 {
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
-		System.out.print("Escolha uma palavra para inverter os caracteres:");
+		System.out.print("Digite algo para inverter a palavra: ");
 		String original = scan.nextLine();
 
 		String invertida = "";
@@ -15,8 +15,7 @@ public class exercicio5 {
 			invertida += original.charAt(i);
 		}
 
-		System.out.println("Texto original: " + original);
-		System.out.println("Texto invertido: " + invertida);
+		System.out.println("String invertida: " + invertida);
 
 		scan.close();
 	}
