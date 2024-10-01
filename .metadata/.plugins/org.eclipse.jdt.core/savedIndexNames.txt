@@ -1,0 +1,8 @@
+INDEX VERSION 1.134+D:\Meus Documentos\Documentos\targetSistemas\.metadata\.plugins\org.eclipse.jdt.core
+1729898752.index
+3827417651.index
+730086805.index
+4127744958.index
+1865797976.index
+2770471087.index
+1325382660.index

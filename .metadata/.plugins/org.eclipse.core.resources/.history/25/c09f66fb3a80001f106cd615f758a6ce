@@ -1,0 +1,97 @@
+package target.sistemas;
+
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class exercicio3 {
+
+    public static void main(String[] args) {
+        // Lista para armazenar os valores de faturamento válidos (não-zero)
+        List<Double> faturamento = new ArrayList<>();
+
+        // Ler o arquivo JSON
+        JSONParser parser = new JSONParser();
+        try {
+            // Caminho do arquivo JSON
+            FileReader reader = new FileReader("JSON/dados.json");
+
+            // Parseando o arquivo JSON para um array
+            JSONArray dados = (JSONArray) parser.parse(reader);
+
+            // Percorrer os dados e armazenar os valores de faturamento (excluindo os dias sem faturamento)
+            for (Object obj : dados) {
+                JSONObject diaFaturamento = (JSONObject) obj;
+                double valor = (double) diaFaturamento.get("valor");
+
+                // Ignorar dias sem faturamento (valor == 0)
+                if (valor > 0) {
+                    faturamento.add(valor);
+                }
+            }
+
+            // Fechar o arquivo JSON
+            reader.close();
+
+            // Chamar métodos para os cálculos
+            double menorValor = calcularMenorValor(faturamento);
+            double maiorValor = calcularMaiorValor(faturamento);
+            double mediaMensal = calcularMedia(faturamento);
+            int diasAcimaDaMedia = contarDiasAcimaDaMedia(faturamento, mediaMensal);
+
+            // Exibir os resultados
+            System.out.println("Menor valor de faturamento: " + menorValor);
+            System.out.println("Maior valor de faturamento: " + maiorValor);
+            System.out.println("Dias com faturamento acima da média: " + diasAcimaDaMedia);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para calcular o menor valor
+    private static double calcularMenorValor(List<Double> faturamento) {
+        double menor = Double.MAX_VALUE;
+        for (double valor : faturamento) {
+            if (valor < menor) {
+                menor = valor;
+            }
+        }
+        return menor;
+    }
+
+    // Método para calcular o maior valor
+    private static double calcularMaiorValor(List<Double> faturamento) {
+        double maior = Double.MIN_VALUE;
+        for (double valor : faturamento) {
+            if (valor > maior) {
+                maior = valor;
+            }
+        }
+        return maior;
+    }
+
+    // Método para calcular a média mensal
+    private static double calcularMedia(List<Double> faturamento) {
+        double soma = 0;
+        for (double valor : faturamento) {
+            soma += valor;
+        }
+        return soma / faturamento.size();
+    }
+
+    // Método para contar os dias em que o faturamento foi maior que a média
+    private static int contarDiasAcimaDaMedia(List<Double> faturamento, double media) {
+        int dias = 0;
+        for (double valor : faturamento) {
+            if (valor > media) {
+                dias++;
+            }
+        }
+        return dias;
+    }
+}
